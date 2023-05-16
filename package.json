@@ -1,0 +1,29 @@
+{
+	"name": "ddinddong_game",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"format": "prettier --check --ignore-path .gitignore .",
+		"format:fix": "prettier --write --ignore-path .gitignore ."
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"eslintConfig": {
+		"env": {
+			"browser": true,
+			"node": true
+		}
+	},
+	"devDependencies": {
+		"eslint": "^8.40.0",
+		"eslint-config-airbnb": "^19.0.4",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-import": "^2.27.5",
+		"eslint-plugin-prettier": "^4.2.1",
+		"prettier": "^2.8.8"
+	}
+}
