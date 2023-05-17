@@ -28,7 +28,6 @@
 		"prettier": "^2.8.8"
 	},
 	"dependencies": {
-		"dotenv": "^16.0.3",
 		"firebase": "^9.22.0"
 	}
 }
