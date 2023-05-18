@@ -15,6 +15,7 @@ import {
 } from '../firebase/firebase.js';
 
 import { store } from './store.js';
+import { initGame } from './initGame.js';
 import { getRandomSafeSpot } from './helper.js';
 
 (async function () {
@@ -39,6 +40,8 @@ import { getRandomSafeSpot } from './helper.js';
 				.catch((err) => {
 					if (err) console.log('could not establish onDisconnect event', err);
 				});
+
+			initGame();
 		} else {
 			// 로그아웃
 		}
