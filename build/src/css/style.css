@@ -1,3 +1,344 @@
-.d {
-	border: 2px solid red;
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+
+* {
+	box-sizing: border-box;
+	/* border: 1px solid red; */
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(180deg, #64beff -50%, #6e96ff 69.71%, #2a65ff 150%);
+	font-family: 'Poor Story', cursive;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+ul,
+li,
+p,
+img {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.game-container {
+	position: relative;
+	width: 240px;
+	height: 208px;
+	background: url(../images/map.png) no-repeat no-repeat;
+	transform: scale(3);
+	image-rendering: pixelated;
+	z-index: 100;
+}
+
+.player-info {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 1em;
+	display: flex;
+	gap: 0.5em;
+	align-items: flex-end;
+}
+
+label {
+	display: block;
+	font-weight: bold;
+}
+
+input[type='text'],
+button {
+	cursor: pointer;
+	font-family: inherit;
+	font-weight: bold;
+	font-size: 18px;
+	height: 44px;
+	border-radius: 4px;
+	outline: 0;
+}
+
+input[type='text'] {
+	outline: 0;
+	padding-left: 0.5em;
+	border: 3px solid #222034;
+	width: 150px;
+	text-transform: uppercase;
+}
+
+input[type='text']:focus {
+	border-color: #f000ff;
+}
+
+/* 메인 */
+.main-title {
+	position: fixed;
+	top: 40px;
+	width: fit-content;
+	height: fit-content;
+	font-size: 40px;
+}
+.victory-text {
+	/* -webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: black; */
+	text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+
+	position: fixed;
+	top: 120px;
+	z-index: 150;
+
+	font-size: 32px;
+	animation: victoryFloat 0.8s linear infinite alternate-reverse;
+}
+.victory-text-yellow {
+	color: yellow;
+}
+.victory-text-green {
+	color: #00fe6e;
+	margin-top: -16px;
+}
+.victory-text-pink {
+	color: #fa00ff;
+	margin-top: -16px;
+}
+@keyframes victoryFloat {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(5px);
+	}
+}
+
+.main-container {
+	width: 1400px;
+	height: fit-content;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 50;
+}
+
+.main-container-flex {
+	width: 100%;
+	height: fit-content;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.info-board-container {
+	width: 100%;
+	height: fit-content;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.info-board {
+	width: 300px;
+}
+.player-info-board {
+	height: 580px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.player-text {
+	text-align: right;
+}
+.player-name {
+	font-size: 30px;
+}
+.player-score {
+	font-size: 50px;
+}
+.lib {
+	height: 300px;
+	display: flex;
+	align-items: center;
+}
+#webcam {
+	width: 100%;
+	border: 2px solid black;
+}
+video {
+	object-fit: cover;
+}
+
+.btn-arrow-container {
+	display: flex;
+	justify-content: space-between;
+}
+.arrow-direction {
+	width: 60px;
+	height: 60px;
+	border: 3px solid #5a4d28;
+	background-color: rgba(255, 255, 255, 0.727);
+}
+.player-ready {
+	height: 60px;
+	border: 3px solid #5a4d28;
+}
+.score-board {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+.score-board-timer {
+	text-align: center;
+	font-size: 30px;
+	margin-bottom: 10px;
+}
+.score-board-bg {
+	height: 510px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 30px;
+	background: rgba(0, 0, 0, 0.17);
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	padding: 45px 0;
+}
+.character-score-list {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 45px;
+	color: white;
+}
+.character-name {
+	font-size: 18px;
+}
+.character-score {
+	font-size: 28px;
+}
+.character-arrow {
+	width: 20px;
+	height: 20px;
+	background: url(../images/arrow-pending.png) no-repeat no-repeat;
+}
+
+.game-how-to {
+	position: fixed;
+	bottom: 40px;
+}
+.game-how-to p {
+	text-align: center;
+	color: white;
+	font-size: 19px;
+}
+.maker {
+	position: fixed;
+	left: 5px;
+	bottom: 70px;
+	z-index: 40;
+	transform: rotate(45deg);
+
+	animation: rotate 10s linear 1, fadeout 1s ease 10s 1;
+	animation-fill-mode: forwards;
+}
+@keyframes rotate {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(1800deg);
+	}
+}
+
+@keyframes fadeout {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+/* Characters */
+.grid-cell {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+}
+
+.Character {
+	transition: transform 0.4s;
+}
+
+.Character.you {
+	z-index: 1;
+}
+
+.Character.you .Character_you-arrow {
+	display: block;
+}
+
+.Character_you-arrow {
+	display: none;
+	position: absolute;
+	top: -18px;
+	left: 5px;
+	width: 7px;
+	height: 5px;
+	background: url(./images/arrow.png) no-repeat no-repeat;
+}
+
+.Character_sprite {
+	overflow: hidden;
+	top: -3px;
+	background: url(./images/characters.png);
+}
+
+.Character[data-direction='right'] .Character_sprite {
+	background-position-x: 16px;
+}
+
+.Character[data-color='red'] .Character_sprite {
+	background-position-y: -16px;
+}
+
+.Character[data-color='orange'] .Character_sprite {
+	background-position-y: -32px;
+}
+
+.Character[data-color='yellow'] .Character_sprite {
+	background-position-y: -48px;
+}
+
+.Character[data-color='green'] .Character_sprite {
+	background-position-y: -64px;
+}
+
+.Character[data-color='purple'] .Character_sprite {
+	background-position-y: -80px;
+}
+
+.Character_shadow {
+	background: url(./images/shadow.png) no-repeat no-repeat;
+}
+
+.Character_name-container {
+	position: absolute;
+	top: -12px;
+	left: -5px;
+	font-size: 5px;
+	padding: 1px 2px 1px;
+	border-radius: 3px;
+	background: #333;
+	color: white;
+	font-weight: bold;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.Character_coins {
+	margin-left: 1px;
+	color: gold;
 }
