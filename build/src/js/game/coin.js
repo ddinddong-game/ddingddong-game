@@ -58,3 +58,20 @@ export function setupCoin(gameContainer) {
 
 	placeCoin();
 }
+function createCoinElement(coin, key, coinElements) {
+	const coinElement = document.createElement('div');
+
+	coinElement.classList.add('Coin', 'grid-cell');
+	coinElement.innerHTML = `
+	<div class="Coin_shadow grid-cell"></div>
+	<div class="Coin_sprite grid-cell"></div>
+	`;
+
+	const left = 16 * coin.x + 'px';
+	const top = 16 * coin.y - 4 + 'px';
+	coinElement.style.transform = `translate3d(${left}, ${top}, 0)`;
+
+	coinElements[key] = coinElement;
+
+	return coinElement;
+}
