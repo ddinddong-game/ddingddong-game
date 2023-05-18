@@ -1,24 +1,24 @@
 export const store = {
 	state: {
-		playerId: null,
+		allPlayersRef: null,
 		playerRef: null,
-		players: {},
+		playerId: null,
+		playerLists: {}, // players를 playerLists로 이름 바꿈
+
+		playerElements: {},
 
 		playerInfo: {
 			id: null,
-			name: '이름',
+			name: '남세를 꾸짖는 띵똥',
 			ready: false,
 			direction: 'right',
-			x: 1,
-			y: 1,
+			x: null,
+			y: null,
 			coins: 0,
 		},
 	},
 
 	setState(newState) {
-		if (newState.playerId !== undefined) {
-			this.state.playerInfo.id = newState.playerId;
-		}
 		this.state = { ...this.state, ...newState };
 	},
 
