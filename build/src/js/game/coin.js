@@ -33,7 +33,6 @@ export function setupCoin(gameContainer) {
 	store.setState({ allCoinsRef });
 
 	onValue(store.getState().allCoinsRef, (snapshot) => {
-		console.log(store.getState().allCoinsRef);
 		let coins = snapshot.val() || {};
 		store.setState({ coins });
 	});
@@ -45,7 +44,6 @@ export function setupCoin(gameContainer) {
 
 		coins[key] = true;
 		const coinElement = createCoinElement(coin, key, coinElements);
-		console.log(coinElement);
 		gameContainer.appendChild(coinElement);
 	});
 
