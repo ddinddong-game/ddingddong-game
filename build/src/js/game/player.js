@@ -1,4 +1,5 @@
 import { ref, onValue, onChildAdded, onChildRemoved, db } from '../firebase/firebase.js';
+import { score, renderScoreBoardLists } from './score.js';
 
 import { store } from './store.js';
 
@@ -37,7 +38,9 @@ function updatePlayerElements(playerLists, playerElements) {
 	Object.keys(playerLists).forEach((key) => {
 		const characterState = playerLists[key];
 		const element = playerElements[key];
-		// element.querySelector('.Character_coins').innerText = characterState.coins;
+
+		// score(characterState.coins);
+		element.querySelector('.Character_coins').innerText = characterState.coins;
 		element.setAttribute('data-direction', characterState.direction);
 		const left = 16 * characterState.x + 'px';
 		const top = 16 * characterState.y - 4 + 'px';
@@ -50,6 +53,8 @@ function createPlayerElement(addedPlayer, playerId, playerElements) {
 	characterElement.classList.add('Character', 'grid-cell');
 	if (addedPlayer.id === playerId) {
 		characterElement.classList.add('you');
+	} else {
+		renderScoreBoardLists(addedPlayer.name);
 	}
 	characterElement.innerHTML = `
     <div class="Character_shadow grid-cell"></div>
@@ -63,7 +68,7 @@ function createPlayerElement(addedPlayer, playerId, playerElements) {
 	playerElements[addedPlayer.id] = characterElement;
 
 	characterElement.querySelector('.Character_name').textContent = addedPlayer.name;
-	// characterElement.querySelector('.Character_coins').textContent = addedPlayer.coins;
+	characterElement.querySelector('.Character_coins').textContent = addedPlayer.coins;
 	characterElement.setAttribute('data-direction', addedPlayer.direction);
 	const left = 16 * addedPlayer.x + 'px';
 	const top = 16 * addedPlayer.y - 4 + 'px';
