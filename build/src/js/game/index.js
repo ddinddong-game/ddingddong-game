@@ -16,11 +16,12 @@ import {
 
 import { store } from './store.js';
 import { initGame } from './initGame.js';
-import { getRandomSafeSpot } from './helper.js';
+import { getRandomSafeSpot, createName } from './helper.js';
 
 (async function () {
 	onAuthStateChanged(auth, (user) => {
 		const { x, y } = getRandomSafeSpot();
+		const name = createName();
 
 		if (user) {
 			store.setState({
@@ -28,6 +29,7 @@ import { getRandomSafeSpot } from './helper.js';
 				playerRef: ref(db, `playerLists/${user.uid}`),
 				playerInfo: {
 					...store.state.playerInfo,
+					name: name,
 					id: user.uid,
 					x,
 					y,
@@ -41,7 +43,7 @@ import { getRandomSafeSpot } from './helper.js';
 					if (err) console.log('could not establish onDisconnect event', err);
 				});
 
-			initGame();
+			initGame(name);
 		} else {
 			// 로그아웃
 		}
