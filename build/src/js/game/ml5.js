@@ -1,7 +1,6 @@
 import { db, update, ref, get, onValue, set } from '../firebase/firebase.js';
 import { store } from './store.js';
 import { setupPlayerTimerButton } from './timer.js';
-import { setupCoin, startCoinGeneration } from './coin.js';
 
 let video;
 let classifier;
@@ -202,9 +201,6 @@ function checkAllPlayerReady() {
 				console.log('모든 player들이 준비되었습니다.');
 				set(timerRef, Date.now());
 				setupPlayerTimerButton(timerRef);
-				const $gameContainer = document.querySelector('.game-container');
-				setupCoin($gameContainer);
-				startCoinGeneration();
 			} else {
 				console.log('모든 player들이 준비되지 않았습니다.');
 			}

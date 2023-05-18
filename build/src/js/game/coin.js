@@ -12,9 +12,6 @@ import {
 import { store } from './store.js';
 import { getRandomSafeSpot, getKeyString, randomFromArray } from './helper.js';
 
-let coinIntervalId = null;
-const coinTimeouts = [2000, 3000, 4000, 5000];
-
 function placeCoin() {
 	const { x, y } = getRandomSafeSpot();
 	const coinRef = ref(db, `coins/${getKeyString(x, y)}`);
@@ -22,41 +19,12 @@ function placeCoin() {
 		x,
 		y,
 	});
-}
 
-export function startCoinGeneration() {
-	coinIntervalId = setInterval(() => {
+	const coinTimeouts = [2000, 3000, 4000, 5000];
+	setTimeout(() => {
 		placeCoin();
 	}, randomFromArray(coinTimeouts));
 }
-
-export function stopCoinGeneration() {
-	if (coinIntervalId !== null) {
-		clearInterval(coinIntervalId);
-		coinIntervalId = null;
-	}
-
-	const allCoinsRef = ref(db, 'coins');
-	onValue(allCoinsRef, (snapshot) => {
-		snapshot.forEach((childSnapshot) => {
-			remove(childSnapshot.ref);
-		});
-	});
-}
-
-// function placeCoin() {
-// 	const { x, y } = getRandomSafeSpot();
-// 	const coinRef = ref(db, `coins/${getKeyString(x, y)}`);
-// 	set(coinRef, {
-// 		x,
-// 		y,
-// 	});
-
-// 	const coinTimeouts = [2000, 3000, 4000, 5000];
-// 	setTimeout(() => {
-// 		placeCoin();
-// 	}, randomFromArray(coinTimeouts));
-// }
 
 export function setupCoin(gameContainer) {
 	const allCoinsRef = ref(db, 'coins');
@@ -82,11 +50,10 @@ export function setupCoin(gameContainer) {
 	onChildRemoved(allCoinsRef, (snapshot) => {
 		const { x, y } = snapshot.val();
 		const keyToRemove = getKeyString(x, y);
-		if (gameContainer.contains(coinElements[keyToRemove])) {
-			gameContainer.removeChild(coinElements[keyToRemove]);
-		}
+		gameContainer.removeChild(coinElements[keyToRemove]);
 		delete coinElements[keyToRemove];
 	});
+
 	placeCoin();
 }
 

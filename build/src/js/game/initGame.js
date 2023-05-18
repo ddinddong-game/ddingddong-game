@@ -1,5 +1,5 @@
 import { setupPlayer } from './player.js';
-// import { setupCoin } from './coin.js';
+import { setupCoin } from './coin.js';
 import KeyPress from './KeyPress.js';
 import { handleArrowPress } from './handleArrow.js';
 
@@ -14,5 +14,5 @@ export function initGame(name) {
 
 	$playerName.textContent = name;
 	setupPlayer($gameContainer);
-	// setupCoin($gameContainer);
+	setupCoin($gameContainer);
 }

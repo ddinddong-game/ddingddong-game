@@ -1,5 +1,4 @@
 import { db, ref, onValue, get, update } from '../firebase/firebase.js';
-import { stopCoinGeneration } from './coin.js';
 
 export function setupPlayerTimerButton(timerRef) {
 	const timerDisplay = document.querySelector('.timer-count');
@@ -22,7 +21,6 @@ export function setupPlayerTimerButton(timerRef) {
 					findTopScorePlayer();
 					resetAllPlayerCoins();
 					timerDisplay.textContent = 0;
-					stopCoinGeneration();
 					clearInterval(timerInterval);
 				}
 			}, 1000);
