@@ -15,15 +15,23 @@ import {
 } from '../firebase/firebase.js';
 
 import { store } from './store.js';
+import { getRandomSafeSpot } from './helper.js';
 
 (async function () {
 	onAuthStateChanged(auth, (user) => {
+		const { x, y } = getRandomSafeSpot();
+
 		if (user) {
 			store.setState({
 				playerId: user.uid,
-				playerRef: ref(db, `players/${user.uid}`),
+				playerRef: ref(db, `playerLists/${user.uid}`),
+				playerInfo: {
+					...store.state.playerInfo,
+					id: user.uid,
+					x,
+					y,
+				},
 			});
-
 			set(store.getState().playerRef, store.getState().playerInfo);
 
 			onDisconnect(store.getState().playerRef)
@@ -45,4 +53,3 @@ import { store } from './store.js';
 		console.log(errorCode, errorMessage);
 	}
 })();
-var auth = 'good';
