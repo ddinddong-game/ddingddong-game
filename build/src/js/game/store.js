@@ -4,8 +4,11 @@ export const store = {
 		playerRef: null,
 		playerId: null,
 		playerLists: {}, // players를 playerLists로 이름 바꿈
-
 		playerElements: {},
+
+		allCoinsRef: null,
+		coins: {},
+		coinElements: {},
 
 		playerInfo: {
 			id: null,
