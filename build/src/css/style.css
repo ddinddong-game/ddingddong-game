@@ -2,7 +2,6 @@
 
 * {
 	box-sizing: border-box;
-	border: 1px solid red;
 }
 
 html,
@@ -151,6 +150,7 @@ input[type='text']:focus {
 }
 .player-text {
 	text-align: right;
+	font-weight: bold;
 }
 .player-name {
 	font-size: 30px;
@@ -192,8 +192,17 @@ video {
 	background-color: #f97124;
 	margin-bottom: 10px;
 }
-
+.game-trigger-box {
+	display: flex;
+	gap: 5px;
+}
 .player-ready {
+	flex: 1;
+	height: 60px;
+	border: 3px solid #5a4d28;
+}
+.player-start {
+	flex: 1;
 	height: 60px;
 	border: 3px solid #5a4d28;
 }
@@ -225,7 +234,7 @@ video {
 	padding: 0 45px;
 	color: white;
 }
-.character-name {
+.score-character-name {
 	font-size: 18px;
 }
 .character-score {
@@ -244,12 +253,13 @@ video {
 .game-how-to p:not(:last-of-type) {
 	text-align: center;
 	color: white;
-	font-size: 19px;
+	font-size: 15px;
 }
 .warn-text {
 	color: red;
 	text-align: center;
-	font-size: 19px;
+	font-weight: bold;
+	font-size: 15px;
 }
 .maker {
 	position: fixed;
@@ -278,6 +288,7 @@ video {
 		opacity: 0;
 	}
 }
+
 /* Characters */
 .grid-cell {
 	position: absolute;
@@ -304,13 +315,13 @@ video {
 	left: 5px;
 	width: 7px;
 	height: 5px;
-	background: url(./images/arrow.png) no-repeat no-repeat;
+	background: url(../images/arrow.png) no-repeat no-repeat;
 }
 
 .Character_sprite {
 	overflow: hidden;
 	top: -3px;
-	background: url(./images/characters.png);
+	background: url(../images/characters.png);
 }
 
 .Character[data-direction='right'] .Character_sprite {
@@ -338,20 +349,20 @@ video {
 }
 
 .Character_shadow {
-	background: url(./images/shadow.png) no-repeat no-repeat;
+	background: url(../images/shadow.png) no-repeat no-repeat;
 }
 
 .Character_name-container {
 	position: absolute;
 	top: -12px;
-	left: -5px;
+	left: -2px;
 	font-size: 5px;
 	padding: 1px 2px 1px;
 	border-radius: 3px;
-	background: #333;
+	background: #33333364;
 	color: white;
 	font-weight: bold;
-	text-transform: uppercase;
+	/* text-transform: uppercase; */
 	white-space: nowrap;
 }
 
