@@ -11,8 +11,9 @@
 			rel="stylesheet"
 		/>
 		<link rel="stylesheet" href="./src/css/style.css" type="text/css" />
-		<script type="module" src="./src/js/index.js" defer></script>
+		<script src="https://unpkg.com/ml5@latest/dist/ml5.min.js" defer></script>
 		<script type="module" src="./src/js/game/index.js" defer></script>
+		<script type="module" src="./src/js/ml5.js" defer></script>
 	</head>
 
 	<body>
@@ -36,10 +37,20 @@
 							<video id="webcam" autoplay playsinline></video>
 						</div>
 						<div class="btn-arrow-container">
-							<button type="button" class="arrow-direction">⬆️</button>
-							<button type="button" class="arrow-direction">⬇️</button>
-							<button type="button" class="arrow-direction">⬅️</button>
-							<button type="button" class="arrow-direction">➡️</button>
+							<button type="button" class="arrow-direction topButton">⬆️</button>
+							<button type="button" class="arrow-direction downButton">⬇️</button>
+							<button type="button" class="arrow-direction rightButton">⬅️</button>
+							<button type="button" class="arrow-direction leftButton">➡️</button>
+						</div>
+						<div class="btn-arrow-ready-container">
+							<div class="ready-top ready-state"></div>
+							<div class="ready-down ready-state"></div>
+							<div class="ready-right ready-state"></div>
+							<div class="ready-left ready-state"></div>
+							<!-- <div class="amountOfLeftImages"></div>
+							<div class="amountOfRightImages"></div>
+							<div class="amountOfTopImages"></div>
+							<div class="amountOfDownImages"></div> -->
 						</div>
 						<button type="button" class="player-ready">준비!</button>
 					</div>
@@ -95,8 +106,10 @@
 		<div class="game-how-to">
 			<div class="game-how-to-flex">
 				<p>띵똥이가 간식을 먹을 수 있게 도와줄까요?</p>
-				<p>상,하,좌,우 동작을 등록해주세요. 모두 준비를 마치면 시작합니다!</p>
+				<p>상,하,좌,우 동작을 등록해주세요. 등록후 준비를 눌러주세요</p>
+				<p>모두 준비를 마치면 시작합니다!</p>
 				<p>간식을 가장 많이 먹은 띵똥이가 승리!</p>
+				<p class="warn-text">* 주의! 등록하지 않은 방향으로는 움직이지 않습니다 *</p>
 			</div>
 		</div>
 

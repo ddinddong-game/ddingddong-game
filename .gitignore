@@ -1,4 +1,6 @@
 config.js
+ 
+.firebase/hosting.*.cache
 
 # Logs
 logs
