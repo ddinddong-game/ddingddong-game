@@ -3,7 +3,6 @@ import { ref, onValue, onChildAdded, onChildRemoved, db } from '../firebase/fire
 import { store } from './store.js';
 
 export function setupPlayer(gameContainer) {
-	console.log(store);
 	store.setState({ allPlayersRef: ref(db, 'playerLists') });
 
 	const allPlayersRef = store.getState().allPlayersRef;
@@ -17,7 +16,6 @@ export function setupPlayer(gameContainer) {
 
 	onChildAdded(allPlayersRef, (snapshot) => {
 		const addedPlayer = snapshot.val();
-		console.log(addedPlayer);
 		const characterElement = createPlayerElement(
 			addedPlayer,
 			store.getState().playerId,
@@ -36,10 +34,7 @@ export function setupPlayer(gameContainer) {
 }
 
 function updatePlayerElements(playerLists, playerElements) {
-	console.log(playerElements);
-
 	Object.keys(playerLists).forEach((key) => {
-		console.log(key);
 		const characterState = playerLists[key];
 		const element = playerElements[key];
 		// element.querySelector('.Character_coins').innerText = characterState.coins;
