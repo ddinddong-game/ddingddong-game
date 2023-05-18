@@ -1,5 +1,5 @@
-import { isSolid } from './helper.js';
-import { set } from '../firebase/firebase.js';
+import { isSolid, getKeyString } from './helper.js';
+import { db, ref, set, remove, update } from '../firebase/firebase.js';
 import { store } from '../game/store.js';
 import { mapData } from '../game/mapData.js';
 
@@ -23,6 +23,22 @@ export function handleArrowPress(xChange = 0, yChange = 0) {
 		}
 		set(playerRef, playersLists[playerId]);
 
-		// attempGrabCoin(newX, newY);
+		attempGrabCoin(newX, newY);
+	}
+}
+
+function attempGrabCoin(x, y) {
+	const key = getKeyString(x, y);
+	const playerId = store.state.playerId;
+	const coins = store.getState().coins;
+	const playerRef = store.getState().playerRef;
+	const playersLists = store.getState().playerLists;
+
+	if (coins[key]) {
+		const coinRef = ref(db, `coins/${getKeyString(x, y)}`);
+		remove(coinRef);
+		update(playerRef, {
+			coins: playersLists[playerId].coins + 1,
+		});
 	}
 }
