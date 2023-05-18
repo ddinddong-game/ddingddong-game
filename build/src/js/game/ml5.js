@@ -1,5 +1,7 @@
-import { db, update, ref, get } from './firebase/firebase.js';
-import { store } from './game/store.js';
+import { db, update, ref, get, onValue, set } from '../firebase/firebase.js';
+import { store } from './store.js';
+import { setupPlayerTimerButton } from './timer.js';
+import { setupCoin, startCoinGeneration } from './coin.js';
 
 let video;
 let classifier;
@@ -63,10 +65,6 @@ function videoReady() {
 }
 
 setUp();
-
-console.log(store.state.playerId);
-console.log(ref(db, `playerLists/${store.state.playerId}`));
-console.log('상태찍어서 아이디 확인중');
 
 function whileTraining(loss) {
 	if (loss == null) {
@@ -164,6 +162,7 @@ function setUpButtons() {
 	//train button/start
 	const playerReadyBtn = document.querySelector('.player-ready');
 	playerReadyBtn.addEventListener('click', function () {
+		console.log(store.state);
 		if (!checkAllDirectionImage()) {
 			alert('모든 방향의 동작을 등록해주세요');
 		} else {
@@ -173,16 +172,6 @@ function setUpButtons() {
 }
 setUpButtons();
 
-const playerStartBtn = document.querySelector('.player-start');
-playerStartBtn.addEventListener('click', function () {
-	if (!checkAllPlayerReady()) {
-		alert('누군가... 준비가 덜 됐나 봅니다...');
-	} else {
-		alert('타이머를 가져옵시다');
-		//외부에서 타이머 트리거 함수 가져오기
-	}
-});
-
 function checkAllDirectionImage() {
 	let savedImages = store.state.savedImages;
 
@@ -191,42 +180,42 @@ function checkAllDirectionImage() {
 			return false;
 		}
 	}
-
 	return true;
 }
 
 function checkAllPlayerReady() {
-	const playersRef = ref(db, 'playerLists');
-	let isAllReady = false;
-	get(playersRef)
-		.then((snapshot) => {
-			if (snapshot.exists()) {
-				const players = snapshot.val();
-				let allReady = true;
+	const playerListsRef = ref(db, 'playerLists');
+	const timerRef = ref(db, 'timer');
+	let allReady = true;
 
-				// players 객체의 모든 키(즉, playerId)에 대해 반복합니다.
-				for (let playerId in players) {
-					// 만약 해당 playerId의 ready 속성값이 false라면,
-					if (!players[playerId].ready) {
-						allReady = false;
-						break;
-					}
+	onValue(
+		playerListsRef,
+		(snapshot) => {
+			snapshot.forEach((childSnapshot) => {
+				const player = childSnapshot.val();
+				if (!player.ready) {
+					allReady = false;
 				}
-				console.log(allReady);
-				if (allReady) {
-					isAllReady = true;
-					console.log('이즈올레디 트루바꾸기');
-					return isAllReady;
-				} else {
-					isAllReady = false;
-					console.log('이즈올레디 펄스바꾸기');
-					return isAllReady;
-				}
+			});
+
+			if (allReady) {
+				console.log('모든 player들이 준비되었습니다.');
+				set(timerRef, Date.now());
+				setupPlayerTimerButton(timerRef);
+				const $gameContainer = document.querySelector('.game-container');
+				setupCoin($gameContainer);
+				startCoinGeneration();
 			} else {
-				console.log('No data available');
+				console.log('모든 player들이 준비되지 않았습니다.');
 			}
-		})
-		.catch((error) => {
-			console.error(error);
-		});
+		},
+		{
+			onlyOnce: true,
+		},
+	);
 }
+
+const playerStartBtn = document.querySelector('.player-start');
+playerStartBtn.addEventListener('click', function () {
+	checkAllPlayerReady();
+});

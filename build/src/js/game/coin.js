@@ -12,6 +12,9 @@ import {
 import { store } from './store.js';
 import { getRandomSafeSpot, getKeyString, randomFromArray } from './helper.js';
 
+let coinIntervalId = null;
+const coinTimeouts = [2000, 3000, 4000, 5000];
+
 function placeCoin() {
 	const { x, y } = getRandomSafeSpot();
 	const coinRef = ref(db, `coins/${getKeyString(x, y)}`);
@@ -19,12 +22,41 @@ function placeCoin() {
 		x,
 		y,
 	});
+}
 
-	const coinTimeouts = [2000, 3000, 4000, 5000];
-	setTimeout(() => {
+export function startCoinGeneration() {
+	coinIntervalId = setInterval(() => {
 		placeCoin();
 	}, randomFromArray(coinTimeouts));
 }
+
+export function stopCoinGeneration() {
+	if (coinIntervalId !== null) {
+		clearInterval(coinIntervalId);
+		coinIntervalId = null;
+	}
+
+	const allCoinsRef = ref(db, 'coins');
+	onValue(allCoinsRef, (snapshot) => {
+		snapshot.forEach((childSnapshot) => {
+			remove(childSnapshot.ref);
+		});
+	});
+}
+
+// function placeCoin() {
+// 	const { x, y } = getRandomSafeSpot();
+// 	const coinRef = ref(db, `coins/${getKeyString(x, y)}`);
+// 	set(coinRef, {
+// 		x,
+// 		y,
+// 	});
+
+// 	const coinTimeouts = [2000, 3000, 4000, 5000];
+// 	setTimeout(() => {
+// 		placeCoin();
+// 	}, randomFromArray(coinTimeouts));
+// }
 
 export function setupCoin(gameContainer) {
 	const allCoinsRef = ref(db, 'coins');
@@ -50,20 +82,22 @@ export function setupCoin(gameContainer) {
 	onChildRemoved(allCoinsRef, (snapshot) => {
 		const { x, y } = snapshot.val();
 		const keyToRemove = getKeyString(x, y);
-		gameContainer.removeChild(coinElements[keyToRemove]);
+		if (gameContainer.contains(coinElements[keyToRemove])) {
+			gameContainer.removeChild(coinElements[keyToRemove]);
+		}
 		delete coinElements[keyToRemove];
 	});
-
 	placeCoin();
 }
+
 function createCoinElement(coin, key, coinElements) {
 	const coinElement = document.createElement('div');
 
 	coinElement.classList.add('Coin', 'grid-cell');
 	coinElement.innerHTML = `
-	<div class="Coin_shadow grid-cell"></div>
-	<div class="Coin_sprite grid-cell"></div>
-	`;
+            <div class="Coin_shadow grid-cell"></div>
+            <div class="Coin_sprite grid-cell"></div>
+        `;
 
 	const left = 16 * coin.x + 'px';
 	const top = 16 * coin.y - 4 + 'px';
