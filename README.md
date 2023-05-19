@@ -34,7 +34,7 @@
 
 ### 플레이 링크
 
-[띵똥, 저기 간식이야!](ddingddong-game.web.app)
+[띵똥, 저기 간식이야!](https://ddingddong-game.web.app/)
 
 ---
 
