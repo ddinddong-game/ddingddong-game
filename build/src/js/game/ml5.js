@@ -1,6 +1,7 @@
 import { db, update, ref, get, onValue, set } from '../firebase/firebase.js';
 import { store } from './store.js';
 import { setupPlayerTimerButton } from './timer.js';
+import { resetAllPlayerCoins } from './coin.js';
 
 let video;
 let classifier;
@@ -168,7 +169,13 @@ function setUpButtons() {
 			classifier.train(whileTraining);
 		}
 	});
+
+	const playerStartBtn = document.querySelector('.player-start');
+	playerStartBtn.addEventListener('click', function () {
+		checkAllPlayerReady();
+	});
 }
+
 setUpButtons();
 
 function checkAllDirectionImage() {
@@ -199,10 +206,12 @@ function checkAllPlayerReady() {
 
 			if (allReady) {
 				console.log('모든 player들이 준비되었습니다.');
+				resetAllPlayerCoins();
 				set(timerRef, Date.now());
 				setupPlayerTimerButton(timerRef);
 			} else {
 				console.log('모든 player들이 준비되지 않았습니다.');
+				alert('모든 player들이 준비되지 않았습니다.');
 			}
 		},
 		{
@@ -210,8 +219,3 @@ function checkAllPlayerReady() {
 		},
 	);
 }
-
-const playerStartBtn = document.querySelector('.player-start');
-playerStartBtn.addEventListener('click', function () {
-	checkAllPlayerReady();
-});

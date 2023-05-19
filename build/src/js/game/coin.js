@@ -6,6 +6,7 @@ import {
 	db,
 	onChildAdded,
 	set,
+	get,
 	onChildRemoved,
 } from '../firebase/firebase.js';
 
@@ -73,4 +74,16 @@ function createCoinElement(coin, key, coinElements) {
 	coinElements[key] = coinElement;
 
 	return coinElement;
+}
+
+export function resetAllPlayerCoins() {
+	const allPlayersRef = ref(db, 'playerLists');
+
+	get(allPlayersRef).then((snapshot) => {
+		const allPlayers = snapshot.val() || {};
+		for (const playerId in allPlayers) {
+			const playerRef = ref(db, `playerLists/${playerId}`);
+			update(playerRef, { coins: 0 });
+		}
+	});
 }

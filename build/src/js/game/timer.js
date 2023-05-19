@@ -1,7 +1,9 @@
 import { db, ref, onValue, get, update } from '../firebase/firebase.js';
+import { resetAllPlayerCoins } from './coin.js';
 
 export function setupPlayerTimerButton(timerRef) {
 	const timerDisplay = document.querySelector('.timer-count');
+	const playerScore = document.querySelector('.player-score');
 
 	let timerStart = null;
 	let timerInterval = null;
@@ -20,22 +22,11 @@ export function setupPlayerTimerButton(timerRef) {
 				} else {
 					findTopScorePlayer();
 					resetAllPlayerCoins();
+					playerScore.textContent = 0;
 					timerDisplay.textContent = 0;
 					clearInterval(timerInterval);
 				}
 			}, 1000);
-		}
-	});
-}
-
-function resetAllPlayerCoins() {
-	const allPlayersRef = ref(db, 'playerLists');
-
-	get(allPlayersRef).then((snapshot) => {
-		const allPlayers = snapshot.val() || {};
-		for (const playerId in allPlayers) {
-			const playerRef = ref(db, `playerLists/${playerId}`);
-			update(playerRef, { coins: 0 });
 		}
 	});
 }
