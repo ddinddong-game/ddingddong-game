@@ -16,7 +16,7 @@ export function setupPlayerTimerButton(timerRef) {
 				clearInterval(timerInterval);
 			}
 			timerInterval = setInterval(() => {
-				const timeLeft = 10 - Math.floor((Date.now() - timerStart) / 6000);
+				const timeLeft = 60 - Math.floor((Date.now() - timerStart) / 6000);
 				if (timeLeft >= 0) {
 					timerDisplay.textContent = timeLeft;
 				} else {
