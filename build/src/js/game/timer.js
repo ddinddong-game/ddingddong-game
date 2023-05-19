@@ -55,6 +55,18 @@ function findTopScorePlayer() {
 			}
 		}
 	});
-	console.log(`Top scorer is ${topScorerName} with ${topScore} coins`);
+
+	console.log(`Top scorer is ${topScorerName} with ${topScore * 100} coins`);
+	renderWinner(topScorerName, topScore);
 	return topScorerName;
+}
+
+function renderWinner(topScorerName, topScore) {
+	const winnerElement = document.querySelector('.victory-text');
+	winnerElement.innerHTML = `
+	<p class="victory-text-yellow">승리자! ${topScorerName}가 ${topScore}만큼 행복해합니다</p>
+	<p class="victory-text-green">승리자! ${topScorerName}가 ${topScore}만큼 행복해합니다</p>
+	<p class="victory-text-pink">승리자! ${topScorerName}가 ${topScore}만큼 행복해합니다</p>
+  `;
+	winnerElement.style.display = 'block';
 }

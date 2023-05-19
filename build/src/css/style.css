@@ -82,8 +82,7 @@ input[type='text']:focus {
 	font-size: 40px;
 }
 .victory-text {
-	/* -webkit-text-stroke-width: 1px;
-	-webkit-text-stroke-color: black; */
+	display: none;
 	text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
 
 	position: fixed;
